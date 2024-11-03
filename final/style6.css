@@ -1,0 +1,204 @@
+.forget-password {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.forget-password .overlap-wrapper {
+    background-color: #ffffff ;
+    width: 1500px;
+    height : 720px;
+}
+.forget-password .overlap {
+    position: relative;
+    height: 721px;
+    top: -1px;
+}
+.forget-password .rectangle {
+    position: absolute;
+    width: 900px;
+    height: 550px;
+    top: 50px;
+    left: 300px;
+    background-color: #d9d9d94c;
+    border-radius: 30px;
+  }
+.forget-password .frame {
+    position: absolute;
+    width : 1499px;
+    height : 719px;
+    top: 0;
+    left: 1px;
+    background-color :#0000004c;
+}
+.forget-password .sign-up {
+    position: absolute;
+    width : 425px;
+    height : 70px;
+    top: 494px;
+    left: 538px;
+}
+.forget-password .overlap-group {
+    position: relative;
+    width: 423px;
+    height: 70px;
+}
+.forget-password .resend {
+    position: absolute;
+    width: 400px;
+    top: 8px;
+    left: 12px;
+    font-family: "Inter-Bolt" ,Helvetica ;
+    font-weight : 700 ;
+    color: #ffffff;
+    font-size: 50px;
+    letter-spacing: 0;
+    line-height: 44px;
+    white-space : nowrap;
+}
+.forget-password .rectangle1 {
+    width: 500px;
+    height: 70px;
+}
+.forget-password .rectangle1 {
+    position: absolute;
+    width : 420px;
+    height : 60px;
+    top: 0;
+    left: 0;
+    background-color: #007F7F;
+    mix-blend-mode: soft-light ;
+    border-radius: 20px;
+}
+.forget-password .email {
+    position: absolute;
+    width : 53px;
+    height : 52px;
+    top: 380px;
+    left: 538px;
+}
+.forget-password .div {
+    position: absolute;
+    width: 852px;
+    height : 472 px;
+    top: 124px;
+    left: 324px;
+    background-color: #d9d9d94c;
+    border-radius : 30px;
+}
+.forget-password .logo-no-background {
+    position: absolute;
+    width: 211px;
+    height: 171px;
+    top: -400px;
+    left: 100px;
+    object-fit: cover ;
+    
+}
+.forget-password .overlap {
+    position: relative;
+    height: 720px;
+    background-image: url(./img/photo-1507525428034-b723cf961d3e-1.png);
+    background-size: cover;
+    background-position: 50% 50%;
+}
+.forget-password .password {
+  position: absolute;
+  top: 80px;
+  font-size: 30px;
+  left: 0px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #0000004c;
+  letter-spacing: 0;
+  line-height: 44px;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.form {
+  position: absolute;
+  margin: 20px -20 0px;
+  width: 190px;
+}
+
+.form input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px #fff solid;
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 20px;
+  color: #000000;
+}
+
+.form input:focus,
+.form input:valid {
+  outline: 0;
+  border-bottom-color: rgb(0, 0, 0);
+}
+
+.form label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  pointer-events: none;
+}
+
+.form label span {
+  display: inline-block;
+  font-size: 20px;
+  min-width: 1px;
+  color: #000000;
+  transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.sign-up-btn {
+    position: absolute;
+    width: 425px;
+    height: 70px;
+    top: 0px;
+    left: 0px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.form input:focus+label span,
+.form input:valid+label span {
+  color: rgb(0, 0, 0);
+  transform: translateY(-30px);
+}
+
+.forget-password .email {
+    position: absolute;
+    top: 383px;
+    left: 667px;
+    font-family: "Inter-Bold", Helvetica ;
+    font-weight: 700;
+    color: #0000004c;
+    font-size: 30px;
+    letter-spacing: 0;
+    line-height: 44px;
+    white-space: nowrap;
+    background : transparent;
+    border : none ;
+    padding: 0;
+}
+.forget-password .email {
+    position: absolute;
+    width: 53px;
+    height: 52px;
+    top: -150px;
+    left: 150px;
+  }
+.forget-password .email1 {
+    position: absolute;
+    width: 53px;
+    height: 52px;
+    top: -135px;
+    left: 70px;
+}

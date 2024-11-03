@@ -1,0 +1,333 @@
+.second {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.second .overlap-group-wrapper {
+  background-color: #ffffff;
+  width: 1500px;
+  height: 720px;
+}
+
+.second .overlap-group {
+  position: relative;
+  height: 720px;
+  background-image: url(./img/loc.png);
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.second .beach {
+  position: absolute;
+  width: 1500px;
+  height: 720px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.second .rectangle {
+  position: absolute;
+  width: 1500px;
+  height: 720px;
+  top: 0;
+  left: 0;
+  background-color: #0000004c;
+}
+
+.second .div {
+  position: absolute;
+  width: 1500px;
+  height: 85px;
+  top: 0;
+  left: 0;
+  background-color: #d9d9d94c;
+}
+
+.second .logo-no-background {
+  position: absolute;
+  width: 113px;
+  height: 85px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.second .acco-removebg {
+  position: absolute;
+  width: 66px;
+  height: 62px;
+  top: 11px;
+  left: 1412px;
+}
+
+.second .text-wrapper {
+  position: absolute;
+  top: 19px;
+  left: 1225px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 50px;
+  letter-spacing: 0;
+  line-height: 44px;
+  white-space: nowrap;
+}
+
+.second .mypadu {
+  position: absolute;
+  width: 586px;
+  height: 318px;
+  top: 85px;
+  left: 16px;
+}
+
+.second .text-wrapper-2 {
+  position: absolute;
+  width: 604px;
+  top: 424px;
+  left: 16px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: 44px;
+  white-space: nowrap;
+}
+
+
+
+.second .hotels-nearby-hotel {
+  position: absolute;
+  top: 494px;
+  left: 678px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: 44px;
+}
+
+.second .nearby-famous-places {
+  position: absolute;
+  width: 767px;
+  top: 299px;
+  left: 678px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: 44px;
+}
+
+.second .p {
+  position: absolute;
+  top: 221px;
+  left: 678px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 40px;
+  letter-spacing: 0;
+  line-height: 44px;
+  white-space: nowrap;
+}
+
+.second .text-wrapper-3 {
+  position: absolute;
+  width: 778px;
+  top: 126px;
+  left: 678px;
+  font-family: "Inter", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 48px;
+  letter-spacing: 0;
+  line-height: 44px;
+}
+
+.second .map {
+  position: absolute;
+  width: 594px;
+  height: 218px;
+  top: 479px;
+  left: 15px;
+  object-fit: cover;
+}
+/* Styles for the chatbot popup */
+#chatbotPopup {
+  position: fixed;
+  bottom: 20px;
+  left: 1050px; /* Moved to the left of the chatbot button */
+  width: 300px;
+  display: none; /* Initially hidden */
+  z-index: 999;
+  border-radius: 8px;
+}
+
+/* Chatbot header style */
+#chatbotPopup .chat-header {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Chatbot body styles */
+#chatbotPopup .chat-body {
+  background-color: #fff;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Chat history and input field */
+#chatDisplay {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#chatDisplay .chat-message {
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+/* Chatbot replies on the left */
+.chatbot-reply {
+  align-self: flex-start;
+  background-color: #ccc;
+  color: black;
+  border-radius: 10px;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+/* User messages on the right */
+.user-message {
+  align-self: flex-end;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+  text-align: right;
+}
+
+/* Input section at the bottom */
+#chatInputContainer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+#chatInputContainer input[type="text"] {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+#chatInputContainer button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+#chatInputContainer button:hover {
+  background-color: #357ab6;
+}
+
+/* Button to open the chatbot */
+#chatbotToggle {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px;
+  border-radius: 30%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#chatbotToggle:hover {
+  background-color: #357ab6;
+}
+.second .rectangle-2 {
+  position: absolute;
+  width: 840px;
+  height: 596px;
+  top: 101px;
+  left: 638px;
+  background-color: #fefefe4c;
+  border-radius: 51px;
+}
+
+/* Additional CSS for the slide functionality */
+.slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px; /* Optional: for rounded corners */
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 300%; /* 100% for each slide */
+}
+
+.slide {
+  width: 100%; /* Each slide takes up the full width of the slider */
+  flex-shrink: 0;
+  padding: 20px; /* Add some padding for aesthetics */
+  box-sizing: border-box; /* Include padding in width calculation */
+  font-size: 40px; /* Increased text size */
+  color: #ffffff; /* Set text color */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Ensure buttons are at the bottom */
+  margin-bottom: 50px; /* Add some spacing from the bottom */
+}
+
+.nav-button {
+  width: 50px;
+  height: 50px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Make buttons circular */
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 24px; /* Larger button text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-button:hover {
+  background-color: #357ab6;
+}

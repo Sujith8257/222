@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="22.css" />
+    <style>
+        /* Popup Styles */
+        .chatbot-popup {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        /* Overlay to dim background */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Chatbot Header */
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+            background-color: #3b82f6;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Chat Display Area */
+        .chat-display {
+            padding: 10px;
+            overflow-y: auto;
+            height: 370px;
+            background-color: #f9f9f9;
+        }
+
+        /* Chat Messages */
+        .chat-message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .user-message {
+          align-self: flex-end;
+          background-color: #4a90e2;
+          color: white;
+          border-radius: 10px;
+          padding: 5px 10px;
+          text-align: right;
+        }
+
+        /* Message Input */
+        .message-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .message-input button {
+            padding: 10px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .message-input button:hover {
+            background-color: #326ac1;
+        }
+    </style>
+</head>
+<body>
+    <div class="first">
+        <div class="overlap-group-wrapper">
+            <div class="overlap-group">
+                <img class="back" src="img/beach-1236581-640-1.png" />
+                <div class="rectangle"></div>
+                <div class="div"></div>
+                <img class="logo-no-background" src="img/logo-no-background-1.png" />
+                <div class="text-wrapper">Marina Beach (Chennai)</div>
+                <div class="text-wrapper-2">Kanyakumari</div>
+                <div class="text-wrapper-3">Rama Krishna Beach (Vizag)</div>
+                <div class="text-wrapper-4">Mypadu Beach Tourism (Nellore)</div>
+                <div class="rectangle-2"></div>
+                <p class="p">Which Beach You Wana Go ?</p>
+                <img class="beachhh" src="img/beachhh-1.png" />
+                <img class="mirena" src="img/mirena-1.png" />
+                <img class="kanya" src="img/kanya.png" />
+                <img class="rama" src="img/rama.png" />
+                <img class="mypadu" src="img/mypadu.png" />
+                <img class="vector" src="img/home.svg" />
+                <img class="frame" src="img/account.svg" />
+                <img class="img" src="img/search.svg" />
+                <div class="rectangle-3"></div>
+                <!-- Mess image for chatbot trigger -->
+                <img class="frame-2" src="img/mess.svg" onclick="toggleChatbotPopup()" style="cursor: pointer;" />
+
+                <!-- Popup Overlay -->
+                <div class="popup-overlay" onclick="toggleChatbotPopup()"></div>
+
+                <!-- Chatbot Popup HTML -->
+                <div class="chatbot-popup" id="chatbotPopup">
+                    <div class="chatbot-header">
+                        B.R.E.E.Z.E Assistant
+                        <span class="close-btn" onclick="toggleChatbotPopup()">×</span>
+                    </div>
+                    <div class="chat-display" id="chatDisplay">
+                        <!-- Example Messages -->
+                        <div class="chat-message bot-message">
+                            Hello! How can I assist you today?
+                        </div>
+                        <div class="chat-message user-message">
+                            Hello! I need a Chatbot!
+                        </div>
+                    </div>
+                    <div class="message-input">
+                        <input type="text" id="chatInput" placeholder="Type your message..." />
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+                <!-- End of Chatbot Popup HTML -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Chatbot Popup
+        function toggleChatbotPopup() {
+            const chatbotPopup = document.getElementById('chatbotPopup');
+            const popupOverlay = document.querySelector('.popup-overlay');
+            const isVisible = chatbotPopup.style.display === 'block';
+
+            chatbotPopup.style.display = isVisible ? 'none' : 'block';
+            popupOverlay.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Send message function
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatDisplay = document.getElementById('chatDisplay');
+            const userMessage = chatInput.value.trim();
+
+            if (userMessage) {
+                // Add user message
+                const userMessageElement = document.createElement('div');
+                userMessageElement.className = 'chat-message user-message';
+                userMessageElement.textContent = userMessage;
+                chatDisplay.appendChild(userMessageElement);
+
+                // Clear input field
+                chatInput.value = '';
+
+                // Scroll to the bottom
+                chatDisplay.scrollTop = chatDisplay.scrollHeight;
+
+                // Simulate bot reply
+                setTimeout(() => {
+                    const botMessageElement = document.createElement('div');
+                    botMessageElement.className = 'chat-message bot-message';
+                    botMessageElement.textContent = "I'm here to help!";
+                    chatDisplay.appendChild(botMessageElement);
+                    
+                    // Scroll to the bottom
+                    chatDisplay.scrollTop = chatDisplay.scrollHeight;
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
