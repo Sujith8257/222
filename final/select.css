@@ -1,0 +1,79 @@
+.rectangle-icon {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	width: 1500px;
+  	height: 720px;
+  	object-fit: cover;
+}
+.select-child {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	background-color: #000;
+  	width: 1500px;
+  	height: 720px;
+  	opacity: 0.08;
+}
+.select-item {
+  	position: absolute;
+  	top: 123px;
+  	left: 324px;
+  	border-radius: 50px;
+    font: #ffffff;
+  	background-color: rgba(217, 217, 217, 0.3);
+  	width: 852px;
+  	height: 472px;
+}
+.group-child {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	border-radius: 50px;
+  	background-color: #000;
+  	width: 348px;
+  	height: 132px;
+  	opacity: 0.4;
+}
+.coastal-tourism {
+  	position: absolute;
+  	top: 22px;
+  	left: 59px;
+  	line-height: 44px;
+  	display: inline-block;
+  	width: 218px;
+}
+.rectangle-parent {
+  	position: absolute;
+  	top: 293px;
+  	left: 378px;
+  	width: 348px;
+  	height: 132px;
+}
+.general-tourism {
+  	position: absolute;
+  	top: 22px;
+  	left: 65px;
+  	line-height: 44px;
+  	display: inline-block;
+  	width: 218px;
+}
+.rectangle-group {
+  	position: absolute;
+  	top: 293px;
+  	left: 767px;
+  	width: 348px;
+  	height: 132px;
+}
+.select {
+  	width: 100%;
+  	position: relative;
+  	background-color: #fff;
+  	height: 720px;
+  	overflow: hidden;
+  	text-align: left;
+  	font-size: 50px;
+  	color: #fff;
+  	font-family: Inter;
+}
+

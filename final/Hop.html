@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nearby Hospitals</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    .form-container {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    input {
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #results {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .hospital-item {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Find Nearby Hospitals</h1>
+  
+  <div class="form-container">
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button id="searchButton">Search Hospitals</button>
+  </div>
+  
+  <div id="results"></div>
+
+  <script>
+    document.getElementById('searchButton').addEventListener('click', async function() {
+      const city = document.getElementById('cityInput').value;
+      const resultsDiv = document.getElementById('results');
+
+      // Clear previous results
+      resultsDiv.innerHTML = '';
+
+      if (city === '') {
+        resultsDiv.innerHTML = 'Please enter a city name.';
+        return;
+      }
+
+      const url = `https://indian-hospitals.p.rapidapi.com/hospitals/city/${city}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-key': '2cbe6697admshfe2cbc8d0a95117p1f53d5jsnb7d893d15b4c',
+          'x-rapidapi-host': 'indian-hospitals.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        
+        if (result && result.length > 0) {
+          result.forEach(hospital => {
+            const hospitalItem = document.createElement('div');
+            hospitalItem.classList.add('hospital-item');
+            hospitalItem.innerHTML = `
+              <strong>${hospital.name}</strong><br>
+              Address: ${hospital.address}<br>
+              City: ${hospital.city}, State: ${hospital.state}<br>
+              Phone: ${hospital.phone || 'N/A'}<br>
+              Pincode: ${hospital.pincode}<br><br>
+            `;
+            resultsDiv.appendChild(hospitalItem);
+          });
+        } else {
+          resultsDiv.innerHTML = 'No hospitals found for the given city.';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        resultsDiv.innerHTML = 'Error fetching data. Please try again.';
+      }
+    });
+  </script>
+
+</body>
+</html>

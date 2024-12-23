@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals4.css" />
+    <link rel="stylesheet" href="style4.css" />
+    <title>Chatbot</title>
+</head>
+
+<body>
+    <div id="chatbotPopup">
+        <div class="chat-header">
+            <h2>B.R.E.E.Z.E Assist</h2>
+            <button onclick="closeChatbot()">✕</button>
+        </div>
+        <div class="chat-body">
+            <!-- Chat Display Container -->
+            <div id="chatDisplay"></div>
+
+            <!-- Input Container -->
+            <div id="chatInputContainer">
+                <input id="chatInput" type="text" placeholder="Type your message..." />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js';
+        import { GoogleGenerativeAI } from "https://cdn.jsdelivr.net/npm/@google/generative-ai@0.1.3/+esm";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpatn5LWaYjrIJQXfgKORdPcRlkfnwgN4",
+            authDomain: "breeze-b6a95.firebaseapp.com",
+            projectId: "breeze-b6a95",
+            storageBucket: "breeze-b6a95.appspot.com",
+            messagingSenderId: "759003817100",
+            appId: "1:759003817100:web:240531dc69725c49eb87a9",
+            measurementId: "G-VZN5K4GC83"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        // Initialize Google AI
+        const genAI = new GoogleGenerativeAI('AIzaSyDhiR6_Cw3nLDEKPPZBsgQHg2P2ZzqmmGo');
+
+        let model;
+        try {
+            model = genAI.getGenerativeModel({
+                model: "gemini-pro",
+                generationConfig: {
+                    temperature: 0.9,
+                    topK: 1,
+                    topP: 1,
+                    maxOutputTokens: 2048,
+                },
+            });
+        } catch (error) {
+            console.error('Error initializing model:', error);
+            model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Handling chat input
+        const chatDisplay = document.getElementById('chatDisplay');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+
+        sendButton.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+        async function handleSendMessage() {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            addMessageToChat(userMessage, 'user-message');
+            chatInput.value = '';
+
+            let botMessage = '';
+
+            if (userMessage.includes('b.r.e.e.z.e.') || userMessage.includes('what is breeze')) {
+                botMessage = "B.R.E.E.Z.E. stands for Beach Recreation Evaluation & Environmental Zoning Engine.";
+            } else if (userMessage.includes('beach safety')) {
+                botMessage = "B.R.E.E.Z.E. provides real-time updates on beach safety.";
+            } else {
+                try {
+                    const prompt = `As a customer support chatbot for Breeze, help the user with their query: ${userMessage}`;
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    botMessage = await response.text();
+                } catch (error) {
+                    console.error('Error details:', error);
+                    botMessage = 'Sorry, I encountered an error. Please try again.';
+                }
+            }
+
+            addMessageToChat(botMessage, 'chatbot-reply');
+        }
+
+        function addMessageToChat(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message', className);
+            messageElement.textContent = message;
+            chatDisplay.appendChild(messageElement);
+            chatDisplay.scrollTop = chatDisplay.scrollHeight;
+        }
+
+        function closeChatbot() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

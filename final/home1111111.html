@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Survey_Corps_Logo.webp">
+    <title>SafeTour Dashboard</title>
+    <style>
+        /* General Reset */
+        /* Chatbot Styles */
+        /* Popup Styles */
+        .frame-2 {
+            position: fixed;
+            bottom: 50px; /* Adjust the vertical position as needed */
+            right: 20px;   /* Adjust the horizontal position as needed */
+            width: 50px;   /* Adjust the size as needed */
+            height: 50px;
+            z-index: 1001; /* Ensure it appears above other elements */
+        }        
+        .chatbot-popup {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        /* Overlay to dim background */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Chatbot Header */
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+            background-color: #3b82f6;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Chat Display Area */
+        .chat-display {
+            padding: 10px;
+            overflow-y: auto;
+            height: 370px;
+            background-color: #f9f9f9;
+        }
+
+        /* Chat Messages */
+        .chat-message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 70%;      /* Limit message width */
+            text-align: right;   /* Align text within the bubble */
+            margin: 5px 0 5px auto; /* Push the bubble to the right */
+        }
+        
+
+        /* Message Input */
+        .message-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .message-input button {
+            padding: 10px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .message-input button:hover {
+            background-color: #326ac1;
+        }
+        /* -- END -- */
+
+        body, h1, h2, p, ul, label, input, select, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #c0c8ff, #ffb6b6);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(to right, #ff6b6b, #ffb100);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #ffcc00;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .grid-section {
+            margin: 3rem 0;
+        }
+
+        .grid-section h2 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            border-bottom: 3px solid #ffcc00;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-item {
+            background-color: white;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            padding: 2rem 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            text-decoration: none; /* Ensures the text inside the grid item isn't underlined */
+            color: inherit; /* Keeps the text color same as the parent */
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .grid-item h3 {
+            color: #ff6b6b;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-item p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .transportation-form {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .transportation-form label, .transportation-form input, .transportation-form button {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .transportation-form button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .transportation-form button:hover {
+            background-color: #ff4949;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>SafeTour Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#transportation">Transportation</a></li>
+                    <li><a href="#climate">Climate Impact</a></li>
+                    <li><a href="#hazards">Hazard Detection</a></li>
+                    <li><a href="#air-quality">Air Quality</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Overview Section -->
+        <section id="overview" class="grid-section">
+            <h2>Overview</h2>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>About SafeTour</h3>
+                    <p>SafeTour is an innovative travel companion providing real-time updates on safety, transportation, climate conditions, and environmental impacts during your journey.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Features</h3>
+                    <p>SafeTour offers ride-hailing integration, climate impact analysis, hazard detection, air quality monitoring, and emergency contact features for secure travel experiences.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Goal</h3>
+                    <p>Our goal is to create a seamless travel experience by combining safety, convenience, and environmental awareness in a single platform.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Climate Impact Section -->
+        <section id="climate" class="grid-section">
+            <h2>Climate Impact</h2>
+            <div class="grid-container">
+                <a href="Weather.html" class="grid-item">
+                    <h3>Weather Updates</h3>
+                    <p>Get up-to-date weather forecasts and alerts to plan your journey accordingly.</p>
+                </a>
+                <a href="Environment.html" class="grid-item">
+                    <h3>Environmental Analysis</h3>
+                    <p>Analyze the environmental impact of your travel choices and opt for eco-friendly options.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Air Quality Section -->
+        <section id="air-quality" class="grid-section">
+            <h2>Air Quality Monitoring</h2>
+            <div class="grid-container">
+                <a href="AirQuality.html" class="grid-item">
+                    <h3>Air Quality Reports</h3>
+                    <p>Check the air quality index and receive recommendations for safe travel conditions.</p>
+                </a>
+                <a href="HealthTips.html" class="grid-item">
+                    <h3>Health Tips</h3>
+                    <p>Find tips on maintaining good health during travel, especially in polluted areas.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- High tides detection -->
+        <section id="High tides" class="grid-section">
+            <h2>Sea Level and High tides</h2>
+            <div class="grid-container">
+                <a href="Hightides.html" class="grid-item">
+                    <h3>High tides report</h3>
+                    <p>Check the range of tides and receive recommendations for safe beach experience.</p>
+                </a>
+                <a href="Beach.html" class="grid-item">
+                    <h3>About Beach Hazards</h3>
+                    <p>Beach hazards can include a range of natural and environmental dangers such as rip currents, jellyfish, strong waves, and sudden tides. Understanding these risks is essential for ensuring safety while enjoying coastal areas. It’s important to recognize warning signs, observe safety flags, and be aware of local weather conditions to prevent accidents. Click here to learn more about how to stay safe and what measures to take in case of an emergency.</p>
+                </a>                
+            </div>
+        </section>
+
+        
+          <!-- Transportation Section -->
+          <section id="transportation" class="grid-section">
+            <h2>Seamless Transportation</h2>
+            <div class="transportation-form">
+                <label for="source">Source Location:</label>
+                <input type="text" id="source" name="source" placeholder="Enter source location">
+
+                <label for="destination">Destination Location:</label>
+                <input type="text" id="destination" name="destination" placeholder="Enter destination location">
+
+                <button type="button" onclick="showTransportationOptions()">Find Transportation</button>
+            </div>
+
+            <div id="transportation-results" class="grid-container" style="display:none;">
+                <a href="Ola.html" class="grid-item">
+                    <h3>Ola</h3>
+                    <p>Compare Ola ride prices to find the most affordable option for your journey.</p>
+                </a>
+                <a href="Uber.html" class="grid-item">
+                    <h3>Uber</h3>
+                    <p>Get real-time Uber ride options with price comparisons to select the best ride.</p>
+                </a>
+                <a href="Rapido.html" class="grid-item">
+                    <h3>Rapido</h3>
+                    <p>Discover economical bike rides with Rapido for a fast and budget-friendly commute.</p>
+                </a>
+            </div>
+        </section>
+
+        
+        <!-- Hazard Detection Section -->
+        <section id="hazards" class="grid-section">
+            <h2>Hazard Detection</h2>
+            <div class="grid-container">
+                <a href="Alerts.html" class="grid-item">
+                    <h3>Real-Time Alerts</h3>
+                    <p>Receive notifications of road hazards, accidents, or any potential risks along your route.</p>
+                </a>
+                <a href="Emergency.html" class="grid-item">
+                    <h3>Emergency Assistance</h3>
+                    <p>Quickly access emergency contacts and assistance services in case of urgent situations.</p>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="grid-section">
+            <h2>Contact Us</h2>
+            <div class="grid-container">
+                <a href="Contact.html" class="grid-item">
+                    <h3>Customer Support</h3>
+                    <p>Reach out to our support team for any inquiries or assistance.</p>
+                </a>
+                <a href="Feedback.html" class="grid-item">
+                    <h3>Feedback</h3>
+                    <p>Share your experience with us to help us improve our services.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SafeTour. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTransportationOptions() {
+            document.getElementById("transportation-results").style.display = "grid"; // Change display to grid to show items
+        }
+    </script>
+    <!-- Chatbot -->
+     <!-- Mess image for chatbot trigger -->
+      <div class="frame-2">
+        <img class="frame-2" src="img\Frame.svg" onclick="toggleChatbotPopup()" style="cursor: pointer;" />
+      </div>
+     <!-- Popup Overlay -->
+     <div class="popup-overlay" onclick="toggleChatbotPopup()"></div>
+
+     <!-- Chatbot Popup HTML -->
+     <div class="chatbot-popup" id="chatbotPopup">
+         <div class="chatbot-header">
+             B.R.E.E.Z.E Assistant
+             <span class="close-btn" onclick="toggleChatbotPopup()">×</span>
+         </div>
+         <div class="chat-display" id="chatDisplay">
+             <!-- Example Messages -->
+             <div class="chat-message bot-message">
+                 Hello! How can I assist you today?
+             </div>
+             <div class="chat-message user-message">
+                 Hello! I need a Chatbot!
+             </div>
+         </div>
+         <div class="message-input">
+             <input type="text" id="chatInput" placeholder="Type your message..." />
+             <button onclick="sendMessage()">Send</button>
+         </div>
+     </div>
+
+<script>
+    // Toggle Chatbot Popup
+    function toggleChatbotPopup() {
+        const chatbotPopup = document.getElementById('chatbotPopup');
+        const popupOverlay = document.querySelector('.popup-overlay');
+        const isVisible = chatbotPopup.style.display === 'block';
+
+        chatbotPopup.style.display = isVisible ? 'none' : 'block';
+        popupOverlay.style.display = isVisible ? 'none' : 'block';
+    }
+
+    // Send message function
+    function sendMessage() {
+        const chatInput = document.getElementById('chatInput');
+        const chatDisplay = document.getElementById('chatDisplay');
+        const userMessage = chatInput.value.trim();
+
+        if (userMessage) {
+            // Add user message
+            const userMessageElement = document.createElement('div');
+            userMessageElement.className = 'chat-message user-message';
+            userMessageElement.textContent = userMessage;
+            chatDisplay.appendChild(userMessageElement);
+
+            // Clear input field
+            chatInput.value = '';
+
+            // Scroll to the bottom
+            chatDisplay.scrollTop = chatDisplay.scrollHeight;
+
+            // Simulate bot reply
+            setTimeout(() => {
+                const botMessageElement = document.createElement('div');
+                botMessageElement.className = 'chat-message bot-message';
+                botMessageElement.textContent = "I'm here to help!";
+                chatDisplay.appendChild(botMessageElement);
+                
+                // Scroll to the bottom
+                chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            }, 1000);
+        }
+    }
+    document.getElementById('chatInput').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevents newline in input field
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>

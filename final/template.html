@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/globals5.css" />
+    <link rel="stylesheet" href="css/style5.css" />
+    <title>B.R.E.E.Z.E Assist</title>
+</head>
+<body>
+    <div class="second">
+        <div class="overlap-group-wrapper">
+            <div class="overlap-group">
+                <img class="beach" src="img/beach-1236581-640-1.png" />
+                <div class="rectangle"></div>
+                <div class="div"></div>
+                <img class="logo-no-background" src="img/logo-no-background-1.png" />
+                <img class="acco-removebg" src="img/acco-removebg-preview-1.png" />
+                <div class="text-wrapper">Home</div>
+                <img class="mypadu" src="img/mypadu.png" />
+                <div class="text-wrapper-2">Mypadu Beach Tourism (Nellore)</div>
+                <img class="map" src="img/map.png" />
+
+                <!-- Rectangle for Details -->
+                <div class="rectangle-2">
+                    <!-- Slider for details -->
+                    <div class="slider">
+                        <div class="slides" id="slides">
+                            <!-- Slide 1: Beach Timings -->
+                            <div class="slide">
+                                <h3>Beach Timings</h3>
+                                <p>10:00 AM to 8:00 PM</p>
+                            </div>
+                            <!-- Slide 2: Nearby Famous Places -->
+                            <div class="slide">
+                                <h3>Nearby Famous Places</h3>
+                                <p>Sri Chengalamma Temple</p>
+                                <p>Sri Thalpagiri Ranganadha Swamy Temple</p>
+                            </div>
+                            <!-- Slide 3: Nearby Hotels -->
+                            <div class="slide">
+                                <h3>Hotels Nearby</h3>
+                                <p>Hotel Krishnapatnam Grand Inn</p>
+                                <p>Mypadu Haritha Beach Resort</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button class="nav-button" onclick="prevSlide()">&lt;</button>
+                        <button class="nav-button" onclick="nextSlide()">&gt;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Button -->
+    <div id="chatbotToggle">
+        B.R.E.E.Z.E Assist
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div id="chatbotPopup" style="display:none;">
+        <div class="chat-header">
+            <h2>B.R.E.E.Z.E Assist</h2>
+            <button onclick="toggleChatbot()">✕</button>
+        </div>
+        <div class="chat-body">
+            <!-- Chat Display Container -->
+            <div id="chatDisplay"></div>
+
+            <!-- Input Container -->
+            <div id="chatInputContainer">
+                <input id="chatInput" type="text" placeholder="Type your message..." />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Chatbot and Functionality -->
+    <script>
+        // Chatbot toggle functionality
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbotPopup');
+            chatbot.style.display = chatbot.style.display === 'none' || chatbot.style.display === '' ? 'block' : 'none';
+        }
+
+        document.getElementById('chatbotToggle').addEventListener('click', toggleChatbot);
+
+        // Chatbot AJAX handling
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const chatInput = document.getElementById('chatInput');
+            const userMessage = chatInput.value.trim();
+
+            if (userMessage) {
+                const chatDisplay = document.getElementById('chatDisplay');
+                const userMessageElement = document.createElement('div');
+                userMessageElement.classList.add('chat-message', 'user-message');
+                userMessageElement.textContent = userMessage;
+                chatDisplay.appendChild(userMessageElement);
+
+                fetch('chatbot_handler.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `message=${encodeURIComponent(userMessage)}`
+                })
+                .then(response => response.text())
+                .then(reply => {
+                    const botReplyElement = document.createElement('div');
+                    botReplyElement.classList.add('chat-message', 'chatbot-reply');
+                    botReplyElement.textContent = reply;
+                    chatDisplay.appendChild(botReplyElement);
+                });
+
+                chatInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
